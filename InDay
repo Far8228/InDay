@@ -19,8 +19,8 @@ end
 
 
 game:GetService("StarterGui"):SetCore("SendNotification",{
-Title = "hvh.win loading..",
-Text = "made by @2fj0", 
+Title = "InDay loading..",
+Text = "made by @2fj0 & Gamerhacker", 
 
 Duration = 2 
 })
@@ -34,7 +34,7 @@ player = game.Players.LocalPlayer
 local Library, Utility, Flags, Theme = loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/resuu.ui/refs/heads/main/resuu.ui"))();
 --
 local Themes, Visualisation, Visuals, Desync, Movement, Camera, Color, Math, Tween, Chat, Languages, Atlanta = {
-    Default = {1, [[{"Outline":"000000","Accent":"9B4DCA","LightText":"ffffff","DarkText":"afafaf","LightContrast":"1e1e1e","CursorOutline":"9B4DCA","DarkContrast":"141414","TextBorder":"000000","Inline":"323232"}]]},
+    Default = {1, [[{"Outline":"000000","Accent":"FFFFCC","LightText":"ffffff","DarkText":"afafaf","LightContrast":"1e1e1e","CursorOutline":"FFFFFF","DarkContrast":"141414","TextBorder":"000000","Inline":"323232"}]]},
     Abyss = {2, [[{"Outline":"0a0a0a","Accent":"8c87b4","LightText":"ffffff","DarkText":"afafaf","LightContrast":"1e1e1e","CursorOutline":"141414","DarkContrast":"141414","TextBorder":"0a0a0a","Inline":"2d2d2d"}]]},
     Fatality = {3, [[{"Outline":"0f0f28","Accent":"f00f50","LightText":"c8c8ff","DarkText":"afafaf","LightContrast":"231946","CursorOutline":"0f0f28","DarkContrast":"191432","TextBorder":"0a0a0a","Inline":"322850"}]]},
     Neverlose = {4, [[{"Outline":"000005","Accent":"00b4f0","LightText":"ffffff","DarkText":"afafaf","LightContrast":"000f1e","CursorOutline":"0f0f28","DarkContrast":"050514","TextBorder":"0a0a0a","Inline":"0a1e28"}]]},
@@ -1383,17 +1383,6 @@ do -- Atlanta
         return Workspace.CurrentCamera.CFrame.Position
     end
     --
-    function Atlanta:CursorOffset()
-        if Flags["LegitMisc_CursorOffset"]:Get() then
-            local CursorOffsetX = Flags["LegitMisc_CursorOffsetX"]:Get()
-            local CursorOffsetY = Flags["LegitMisc_CursorOffsetY"]:Get()
-            --
-            return Vector2.new(CursorOffsetX, CursorOffsetY)
-        else
-            return Vector2.new(0, 0)
-        end
-    end
-    --
     function Atlanta:GetBodyParts(Character, RootPart, Indexes, Hitboxes)
         local Parts = {}
         local Hitboxes = Hitboxes or {"Head", "Torso", "Arms", "Legs"}
@@ -1777,17 +1766,17 @@ do -- Visuals
 end
 -- // UI Init
 do -- UI
-    local Window = Library:New({Name = ("hvh | Anti trashmode services"), Style = 4, PageAmmount = 6, Size = Vector2.new(Atlanta.Language == "Lt" and 604 or 554, 629), Callback = function(Page)
+    local Window = Library:New({Name = ("InDay"), Style = 4, PageAmmount = 6, Size = Vector2.new(Atlanta.Language == "Lt" and 604 or 554, 629), Callback = function(Page)
         local PageName = Languages:GetTranslate(Page)
         --
         Atlanta.Locals.SelectedPage = PageName
         Atlanta.Locals.Window.VisualPreview:SetPreviewState(PageName == "Players")
     end})
-    Library:UpdateColor("Accent", Color3.fromRGB(155, 77, 202))
+    Library:UpdateColor("Accent", Color3.fromRGB(255, 255, 204))
     --
     Atlanta.Locals.Window = Window
     --
-    Window.wminfo = (Languages:GetTranslation("[%s]  -  [Account = $ACC [$UID],  Build = $BUILD,  Ping = $PING,  FPS = $FPS]")):format("hvh"):gsub("$BUILD", "Developer"):gsub("$ACC", Atlanta.Account.Username):gsub("$UID", Atlanta.Account.UserID)
+    Window.wminfo = (Languages:GetTranslation("[%s]  -  [Account = $ACC [$UID],  Build = $BUILD,  Ping = $PING,  FPS = $FPS]")):format("InDay"):gsub("$BUILD", "Developer"):gsub("$ACC", Atlanta.Account.Username):gsub("$UID", Atlanta.Account.UserID)
     Window.uibind = Enum.KeyCode.Z
     --
     local Rage = Window:Page({Name = Languages:GetTranslation("Rage")})
@@ -1798,9 +1787,6 @@ do -- UI
     local Config = Window:Page({Name = Languages:GetTranslation("Configs")})
     --
     do -- // Content
-        do -- Legit
-end
-        --
         do -- Rage
         --[[
             local Rage_Lighting = Rage:Section({Name = Languages:GetTranslation("Lighting")})
@@ -2737,7 +2723,7 @@ end
 
 -- User Interface Callbacks
 Rage_Main:Toggle({
-    Name = "hvh",
+    Name = "Enabled",
     Default = false,
     Pointer = "Orbit_Toggle",
     Callback = function(state)
@@ -2783,7 +2769,7 @@ Rage_Main:Toggle({
 
 
 Rage_Main:Toggle({
-    Name = "Enable Prediction",
+    Name = "Predict velocity",
     Default = false,
     Pointer = "Prediction_Toggle",
     Callback = function(state)
@@ -2793,7 +2779,7 @@ Rage_Main:Toggle({
 
 
 Rage_Main:Slider({
-    Name = "Prediction Factor",
+    Name = "Prediction amount",
     Minimum = 0,
     Maximum = 10,
     Default = 0.5,
@@ -2805,7 +2791,7 @@ Rage_Main:Slider({
 })
 
 Rage_Main:Slider({
-    Name = "Teleport Height",
+    Name = "Teleport height",
     Minimum = -40,
     Maximum = 40,
     Default = 5,
@@ -2817,7 +2803,7 @@ Rage_Main:Slider({
 })
 
 Rage_Main:Slider({
-    Name = "Random Movement Factor",
+    Name = "Random Teleport distance",
     Minimum = 0,
     Maximum = 200,
     Default = 10,
@@ -2833,87 +2819,42 @@ Rage_Main:Slider({
 
 
 
--- Localizing services for cleaner code
-local Services = {
-    Players = game:GetService("Players"),
-    Player = game:GetService("Players").LocalPlayer,  -- Added Player here
-    Character = game:GetService("Players").LocalPlayer.Character or game:GetService("Players").LocalPlayer.CharacterAdded:Wait()  -- Added Character here
-}
+local Players = game:GetService("Players")
+local Client = Players.LocalPlayer
+local autoResetEnabled = false
 
--- Global function to reset the character
-function resetCharacter()
-    if Services.Player and Services.Character then
-        
-        Services.Player:LoadCharacter() -- Respawn the character
-    end
-end
+-- Function to monitor player's K.O state
+local function startMonitoring(state)
+    task.spawn(function()
+        while state and task.wait(0.1) do
+            if Client.Character and Client.Character:FindFirstChild("BodyEffects") then
+                local BodyEffects = Client.Character:WaitForChild("BodyEffects")
 
--- Global function to monitor character's health and states
-function monitorCharacter(Humanoid, autoResetEnabled)
-    -- Monitor health changes
-    Humanoid.HealthChanged:Connect(function(health)
-        if autoResetEnabled and health < 7 then -- Trigger reset if health is below 5
-            Humanoid.Health = 0 -- Force reset
-        end
-    end)
-
-    -- Monitor state changes
-    Humanoid.StateChanged:Connect(function(_, newState)
-        if autoResetEnabled and newState == Enum.HumanoidStateType.FallingDown then
-            resetCharacter()
-        end
-    end)
-
-    -- Continuous health monitoring loop
-    while Services.Character and Humanoid and Humanoid.Parent and autoResetEnabled do
-        task.wait(0)
-        if Humanoid.Health < 7 then -- Check health in the loop as well
-            Humanoid.Health = 0 -- Force reset
-        end
-    end
-end
-
--- Global function to handle character respawn
-function handleCharacterRespawn(autoResetEnabled)
-    Services.Player.CharacterAdded:Connect(function(newCharacter)
-        Services.Character = newCharacter -- Update the character reference
-        if autoResetEnabled then
-            local Humanoid = Services.Character:WaitForChild("Humanoid") -- Wait for Humanoid to exist
-            monitorCharacter(Humanoid, autoResetEnabled) -- Start monitoring the new character
+                if BodyEffects["K.O"].Value == true then
+                    local humanoid = Client.Character:FindFirstChild("Humanoid")
+                    if humanoid then
+                        humanoid.Health = 0
+                    end
+                end
+            end
         end
     end)
 end
 
--- Global function to start monitoring the current character
-function startMonitoring(autoResetEnabled)
-    if Services.Character then
-        
-        local Humanoid = Services.Character:WaitForChild("Humanoid") -- Wait for Humanoid to exist
-        monitorCharacter(Humanoid, autoResetEnabled)
-    else
-        
-        Services.Character = Services.Player.CharacterAdded:Wait() -- Wait for the character to spawn
-        local Humanoid = Services.Character:WaitForChild("Humanoid")
-        monitorCharacter(Humanoid, autoResetEnabled)
-    end
-end
-
--- Toggle button for Anti Stomp
+-- Toggle function
 Rage_Extra:Toggle({
     Name = "Anti Stomp",
     Default = false,
     Pointer = "AntiStomp_Enabled",
     Callback = function(state)
-        local autoResetEnabled = state -- Update toggle state
-        if state then
-        else
-        end
+        autoResetEnabled = state -- Update toggle state
 
-        -- Handle character respawn and initial setup
-        handleCharacterRespawn(autoResetEnabled)
-        startMonitoring(autoResetEnabled)
+        if state then
+            startMonitoring(true)
+        end
     end,
 })
+
 
 
 
@@ -3232,6 +3173,67 @@ print("12")
     Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
     Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
     game.Players.LocalPlayer.Character.Humanoid.Jump = false
+    end})
+
+
+
+    Players_Extra:Button({
+    Name = "Animation v3",
+    Default = false,
+    Pointer = "AimbotMain_Enabled",
+    Callback = function(state)
+    local Animate = game.Players.LocalPlayer.Character.Animate
+    Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+    Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
+    Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=656117878"
+    Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
+    game.Players.LocalPlayer.Character.Humanoid.Jump = false
+    end})
+
+
+
+    Players_Extra:Button({
+    Name = "Headless & Korblox",
+    Default = false,
+    Pointer = "AimbotMain_Enabled",
+    Callback = function(state)
+    _G.Character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+_G.Head = _G.Character:WaitForChild("Head")
+
+-- Make the head invisible
+_G.Head.Transparency = 1
+
+-- Optional: Remove the face decal
+_G.Face = _G.Head:FindFirstChild("face")
+if _G.Face then _G.Face:Destroy() end
+
+-- Wait for the character to load
+_G.Character:WaitForChild("Humanoid")
+
+-- Replace the right leg with a Korblox leg
+function ReplaceRightLeg()
+    _G.RightUpperLeg = _G.Character:FindFirstChild("RightUpperLeg")
+    _G.RightLowerLeg = _G.Character:FindFirstChild("RightLowerLeg")
+    
+    if _G.RightLowerLeg then
+        _G.RightUpperLeg.Transparency = 1
+        _G.RightLowerLeg:Destroy()
+    end
+
+    -- Create and configure the new Korblox leg
+    _G.NewLeg = Instance.new("Part")
+    _G.NewLeg.Name, _G.NewLeg.Size, _G.NewLeg.Parent = "KorbloxLeg", Vector3.new(1, 3, 1), _G.Character
+    _G.NewLeg.Anchored, _G.NewLeg.CanCollide, _G.NewLeg.Position = false, false, _G.RightUpperLeg.Position
+
+    _G.Mesh = Instance.new("SpecialMesh", _G.NewLeg)
+    _G.Mesh.MeshId, _G.Mesh.TextureId, _G.Mesh.Scale = "http://www.roblox.com/asset/?id=902942093", "http://www.roblox.com/asset/?id=902843398", Vector3.new(1, 1.1, 1)
+
+    _G.Weld = Instance.new("Motor6D")
+    _G.Weld.Part0, _G.Weld.Part1, _G.Weld.C0, _G.Weld.Parent = _G.RightUpperLeg, _G.NewLeg, CFrame.new(0, 0.2, 0), _G.RightUpperLeg
+end
+
+ReplaceRightLeg()
+
     end})
 
 
@@ -4056,6 +4058,7 @@ Players_Main:Toggle({
 
 
 
+
 local removingEffects = false  -- This will control whether the effects are being removed or not
 
 -- Function to start removing effects
@@ -4070,18 +4073,14 @@ local function startRemovingEffects()
                 if bodyEffects then
                     local movementFolder = bodyEffects:FindFirstChild("Movement")
                     if movementFolder then
-                        -- Listen for new "NoJumping", "NoWalkSpeed", or "ReduceWalk" objects being added
+                        -- Listen for any new objects being added and remove them
                         movementFolder.ChildAdded:Connect(function(child)
-                            if child.Name == "NoJumping" or child.Name == "NoWalkSpeed" or child.Name == "ReduceWalk" then
-                                child:Destroy()
-                            end
+                            child:Destroy()
                         end)
 
-                        -- Remove any existing restrictions immediately
+                        -- Remove any existing objects immediately
                         for _, child in ipairs(movementFolder:GetChildren()) do
-                            if child.Name == "NoJumping" or child.Name == "NoWalkSpeed" or child.Name == "ReduceWalk" then
-                                child:Destroy()
-                            end
+                            child:Destroy()
                         end
                     end
                 end
@@ -4103,9 +4102,9 @@ Players_Main:Toggle({
     Pointer = "RemoveRestrictions_Toggle",
     Callback = function(state)
         if state then
-            startRemovingEffects()  -- Start removing the effects when enabled
+            startRemovingEffects()  -- Start removing everything in the folder when enabled
         else
-            stopRemovingEffects()  -- Stop removing the effects when disabled
+            stopRemovingEffects()  -- Stop removing effects when disabled
         end
     end
 })
@@ -4259,6 +4258,159 @@ end
         --
         do -- Visuals
         local Visuals_Main = Visuals2:Section({Name = Languages:GetTranslation("Main"), Fill = true, Side = "Left"})
+
+
+
+
+-- Services
+game:GetService("TweenService")
+game:GetService("Players")
+game:GetService("RunService")
+
+-- Get player and mouse
+player = game.Players.LocalPlayer
+mouse = player:GetMouse()
+
+-- Tween properties
+fadeTime = 1  -- Default fade duration
+fadeTween = nil  -- Will be recreated each time
+predictionEnabled = false  -- Default toggle state
+
+-- Function to create GUI and label
+function createGUI()
+    if player:FindFirstChild("PlayerGui") then
+        -- Remove old GUI (prevents duplicates)
+        if player.PlayerGui:FindFirstChild("InDayScreenGui") then
+            player.PlayerGui:FindFirstChild("InDayScreenGui"):Destroy()
+        end
+
+        -- Create the screen GUI
+        screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "InDayScreenGui"
+        screenGui.Parent = player.PlayerGui
+
+        -- Create the text label
+        textLabel = Instance.new("TextLabel")
+        textLabel.Parent = screenGui
+        textLabel.Text = "InDay"
+        textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        textLabel.BackgroundTransparency = 1
+        textLabel.Size = UDim2.new(0, 100, 0, 50)
+        textLabel.TextSize = 15
+        textLabel.TextStrokeTransparency = 0.8
+        textLabel.Visible = false  -- Start hidden
+    end
+end
+
+-- Function to update position based on the mouse
+function updatePosition()
+    if textLabel then
+        textLabel.Position = UDim2.new(0, mouse.X - textLabel.Size.X.Offset / 3, 0, mouse.Y + textLabel.Size.Y.Offset / 3)
+    end
+end
+
+-- Function to create and start the fade tween
+function startFadeTween()
+    if textLabel then
+        if fadeTween then
+            fadeTween:Cancel()  -- Cancel any existing tween
+        end
+        textLabel.TextTransparency = 0  -- Reset transparency
+        local tweenInfo = TweenInfo.new(fadeTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
+        fadeTween = game:GetService("TweenService"):Create(textLabel, tweenInfo, {TextTransparency = 1})
+        fadeTween:Play()
+    end
+end
+
+-- Toggle for enabling/disabling the text
+Visuals_Main:Toggle({
+    Name = "InDay Text",
+    Default = false,
+    Pointer = "Text_Toggle",
+    Callback = function(state)
+        predictionEnabled = state
+        if predictionEnabled then
+            if not textLabel then
+                createGUI()
+            end
+            textLabel.Visible = true
+            startFadeTween()
+        else
+            if textLabel then
+                textLabel.Visible = false
+                if fadeTween then fadeTween:Cancel() end
+            end
+        end
+    end
+})
+
+-- Slider for text size
+Visuals_Main:Slider({
+    Name = "Text Size",
+    Minimum = 1,
+    Maximum = 50,
+    Default = 15,
+    Decimals = 1,
+    Pointer = "PredictionFactor_Slider",
+    Callback = function(value)
+        if textLabel then
+            textLabel.TextSize = value
+        end
+    end
+})
+
+-- Slider for fade time
+Visuals_Main:Slider({
+    Name = "Fade Time",
+    Minimum = 0.1,
+    Maximum = 5,
+    Default = 1,
+    Decimals = 0.1,
+    Pointer = "PredictionFactor_Slider",
+    Callback = function(value)
+        fadeTime = value
+        if predictionEnabled then
+            startFadeTween()
+        end
+    end
+})
+
+
+Visuals_Main:TextBox({
+    Flag = "Custom_TextBox",
+    Max = 50,  -- Max characters allowed
+    PlaceHolder = "Enter Custom Text",  -- Placeholder text
+    Callback = function(Text, Enter) 
+        if Enter then
+            if textLabel then
+                textLabel.Text = Text  -- Update the text to user input
+            end
+        end
+    end
+})
+
+
+
+-- Detect when player dies and recreate the GUI after respawn
+player.CharacterAdded:Connect(function()
+    wait(1)  -- Short delay to ensure GUI loads properly
+    createGUI()
+    if predictionEnabled then
+        textLabel.Visible = true
+        startFadeTween()
+    end
+end)
+
+-- Update position when enabled
+game:GetService("RunService").Heartbeat:Connect(function()
+    if predictionEnabled and textLabel then
+        updatePosition()
+    end
+end)
+
+
+
+
 
 
 
@@ -4755,36 +4907,36 @@ Messages = {
     "Anti trashmode services",
     "no comp fr",
     "loooser",
-    "wish to stop being a loser?",
+    "keep yapping nca",
     "successfully killed a nn",
     "ALERT!! random detected",
     "ALERT!! nn detected",
-    "i will put you to sleep",
+    "ill put u to sleep nn",
     "silence my dog"
 }
 
-isActive, spamDelay, reportCoroutine = false, 1, nil
+isActive, keybindActive, spamDelay, reportCoroutine = false, false, 1, nil
 
 function sendMessage(message)
     DefaultChatEvents.SayMessageRequest:FireServer(message, "All")
 end
 
-function toggleAutoReport(state)
-    isActive = state
-    if state then
-        reportCoroutine = coroutine.create(function()
-            while isActive do
-                for _, message in ipairs(Messages) do
-                    if not isActive then break end
-                    sendMessage(message)
-                    wait(spamDelay)
-                end
+function startSpam()
+    if reportCoroutine or not isActive or not keybindActive then return end
+    reportCoroutine = coroutine.create(function()
+        while isActive and keybindActive do
+            for _, message in ipairs(Messages) do
+                if not isActive or not keybindActive then break end
+                sendMessage(message)
+                wait(spamDelay)
             end
-        end)
-        coroutine.resume(reportCoroutine)
-    else
-        reportCoroutine = nil
-    end
+        end
+    end)
+    coroutine.resume(reportCoroutine)
+end
+
+function stopSpam()
+    reportCoroutine = nil
 end
 
 Misc_Chat:Toggle({
@@ -4792,7 +4944,11 @@ Misc_Chat:Toggle({
     Default = false,
     Pointer = "ChatSpam_Toggle",
     Callback = function(state)
-        toggleAutoReport(state)
+        isActive = state
+        if not state then
+            keybindActive = false
+            stopSpam()
+        end
     end
 }):Keybind({
     Default = Enum.KeyCode.J,
@@ -4800,8 +4956,15 @@ Misc_Chat:Toggle({
     Mode = "Toggle",
     Pointer = "ChatSpam_Keybind",
     Callback = function()
-        toggleAutoReport(not isActive)
-    end})
+        keybindActive = not keybindActive
+        if keybindActive then
+            startSpam()
+        else
+            stopSpam()
+        end
+    end
+})
+
 Misc_Chat:Slider({
     Name = "Spam Delay (Seconds)",
     Minimum = 0.1,
@@ -4816,8 +4979,10 @@ Misc_Chat:Slider({
 
 game.Players.LocalPlayer.CharacterAdded:Connect(function()
     isActive = false
-    reportCoroutine = nil
+    keybindActive = false
+    stopSpam()
 end)
+
             Misc_Chat:Dropdown({Name = Languages:GetTranslation("Chat Spam Type"), Flag = "MiscChat_Type", Default = "Atlanta", Options = {"Atlanta", "Troll", "Toxic", "Fulcrum", "Custom", "Song"}})
             Misc_Chat:TextBox({Flag = "MiscChat_Song", Max = 50, PlaceHolder = Languages:GetTranslation("Song Name"), Callback = function(Text, Enter) if Enter then Chat:GenerateSong(Text) end end})
             Misc_Chat:Toggle({Name = Languages:GetTranslation("Multiple"), Flag = "MiscChat_Multiple", Default = true})
@@ -4850,11 +5015,11 @@ end)
                     Window:SetName(("%s - %s - (%s)"):format(Flags["ConfigMenu_Name"]:Get(), Atlanta.Account.Username, game.PlaceId)) 
                     Window.wminfo = (Languages:GetTranslation("[%s]  -  [Account = $ACC [$UID],  Build = $BUILD,  Ping = $PING,  FPS = $FPS]")):format(Flags["ConfigMenu_Name"]:Get()):gsub("$BUILD", "Developer"):gsub("$ACC", Atlanta.Account.Username):gsub("$UID", Atlanta.Account.UserID)
                 else
-                    Window:SetName(("%s - %s - (%s)"):format("hvh", Atlanta.Account.Username, game.PlaceId))
-                    Window.wminfo = (Languages:GetTranslation("[%s]  -  [Account = $ACC [$UID],  Build = $BUILD,  Ping = $PING,  FPS = $FPS]")):format("hvh"):gsub("$BUILD", "Developer"):gsub("$ACC", Atlanta.Account.Username):gsub("$UID", Atlanta.Account.UserID)
+                    Window:SetName(("%s - %s - (%s)"):format("InDay", Atlanta.Account.Username, game.PlaceId))
+                    Window.wminfo = (Languages:GetTranslation("[%s]  -  [Account = $ACC [$UID],  Build = $BUILD,  Ping = $PING,  FPS = $FPS]")):format("InDay"):gsub("$BUILD", "Developer"):gsub("$ACC", Atlanta.Account.Username):gsub("$UID", Atlanta.Account.UserID)
                 end
             end})
-            Config_Menu:TextBox({Flag = "ConfigMenu_Name", Default = "hvh", Max = 50, PlaceHolder = "Menu Name", Callback = function(State)
+            Config_Menu:TextBox({Flag = "ConfigMenu_Name", Default = "InDay", Max = 50, PlaceHolder = "Menu Name", Callback = function(State)
                 if Flags["ConfigMenu_CustomName"]:Get() then
                     Window:SetName(("%s - %s - (%s)"):format(State, Atlanta.Account.Username, game.PlaceId))
                     Window.wminfo = (Languages:GetTranslation("[%s]  -  [Account = $ACC [$UID],  Build = $BUILD,  Ping = $PING,  FPS = $FPS]")):format(Flags["ConfigMenu_Name"]:Get()):gsub("$BUILD", "Developer"):gsub("$ACC", Atlanta.Account.Username):gsub("$UID", Atlanta.Account.UserID)
@@ -4877,7 +5042,7 @@ end)
             Config_Theme:Colorpicker({Name = Languages:GetTranslation("Light Text"), Flag = "ConfigTheme_LightText", Default = Color3.fromRGB(255, 255, 255), Callback = function(Color) Library:UpdateColor("TextColor", Color) end})
             Config_Theme:Colorpicker({Name = Languages:GetTranslation("Dark Text"), Flag = "ConfigTheme_DarkText", Default = Color3.fromRGB(175, 175, 175), Callback = function(Color) Library:UpdateColor("TextDark", Color) end})
             Config_Theme:Colorpicker({Name = Languages:GetTranslation("Text Outline"), Flag = "ConfigTheme_TextBorder", Default = Color3.fromRGB(0, 0, 0), Callback = function(Color) Library:UpdateColor("TextBorder", Color) end})
-            Config_Theme:Colorpicker({Name = Languages:GetTranslation("Cursor Outline"), Flag = "ConfigTheme_CursorOutline", Default = Color3.fromRGB(177, 170, 207), Callback = function(Color) Library:UpdateColor("CursorOutline", Color) end})
+            Config_Theme:Colorpicker({Name = Languages:GetTranslation("Cursor Outline"), Flag = "ConfigTheme_CursorOutline", Default = Color3.fromRGB(255, 255, 204), Callback = function(Color) Library:UpdateColor("CursorOutline", Color) end})
             Config_Theme:Dropdown({Name = Languages:GetTranslation("Accent Effect"), Flag = "ConfigTheme_AccentEffect", Default = "None", Options = {"None", "Rainbow", "Shift", "Reverse Shift"}, Callback = function(State) if State == "None" then Library:UpdateColor("Accent", Flags["ConfigTheme_Accent"]:Get()) end end})
             Config_Theme:Slider({Name = Languages:GetTranslation("Effect Length"), Flag = "ConfigTheme_EffectLength", Default = 40, Maximum = 360, Minimum = 1, Decimals = 1})
             --
@@ -4986,7 +5151,7 @@ end)
                             Desync.Fake.Velocity = Vector3.new(9999999999999, -9999999999999, 9999999999999)
                             Desync.Fake.RotVelocity = Vector3.new(9999999999999, -9999999999999, 9999999999999)
                         elseif VelocityMethod == "Destroy Stand" then
-                        Desync.Fake.CFrame = CFrame.new(9999999999999, -9999999999999, 9999999999999) * CFrame.Angles(9999999999999, -9999999999999, 9999999999999)
+                        Desync.Fake.CFrame = CFrame.new(-999999999999999999999999999999, -999999999999999999999999999999, 999999999999999999999999999999) * CFrame.Angles(-999999999999999999999999999999, -999999999999999999999999999999, 999999999999999999999999999999)
                         elseif VelocityMethod == "Furthest It Can Go" then
                            Desync.Fake.Velocity = Vector3.new(-999999999999999999999999999999, -999999999999999999999999999999, -999999999999999999999999999999)
                            Desync.Fake.RotVelocity = Vector3.new(-999999999999999999999999999999, -999999999999999999999999999999, -999999999999999999999999999999)
@@ -5021,16 +5186,6 @@ end)
                     Network.IncomingReplicationLag = Flags["MiscExtra_LagSwitchAmmount"]:Get()
                 else
                     Network.IncomingReplicationLag = 0
-                end
-            end)
-            --
-            Utility:Connection(UserInputService.InputBegan, function(Input)
-                if Input.UserInputType == Enum.UserInputType.MouseButton1 and Flags["MiscExtra_ClickKey"]:Active() then
-                    local Object, Humanoid, RootPart = Atlanta:ValidateClient(Client)
-                    --
-                    if RootPart then
-                        RootPart.CFrame = CFrame.new(Mouse.Hit.Position) + Vector3.new(0, Atlanta:DistanceFromGround(Object, RootPart) + 1, 0)
-                    end
                 end
             end)
             --
@@ -5155,4 +5310,4 @@ end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/anticheat/refs/heads/main/bypass"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/flanchhh/AntiV2/refs/heads/main/Anti%20v2.lua"))();
-loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/script2-skin/refs/heads/main/script2%20skin"))()
+-- loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/script2-skin/refs/heads/main/script2%20skin"))()
