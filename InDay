@@ -4939,15 +4939,15 @@ function teleportLoop()
     while randomTeleportEnabled do
         local player = game.Players.LocalPlayer
         if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            -- Generate random coordinates in the range you mentioned
-            local newX = math.random(9999999, 9999999)
-            local newY = math.random(9999999, 9999999)
-            local newZ = math.random(9999999, 9999999)
+            -- Generate random coordinates in the range you want
+            local newX = math.random(-100, 999999)  -- Random X in the range of -100 to 100
+            local newY = math.random(999999, 999999)   -- Random Y (height) between 50 and 150
+            local newZ = math.random(-100, 999999)  -- Random Z in the range of -100 to 100
 
             -- Apply the random teleport
             player.Character.HumanoidRootPart.CFrame = CFrame.new(newX, newY, newZ)
         end
-        task.wait(0)  -- Add a small delay to prevent crashing
+        task.wait(0)  -- Add a small delay to prevent crashing or overload
     end
 end
 
@@ -4974,6 +4974,7 @@ Misc_Custom:Toggle({
         end
     end
 })
+
 
 
 
