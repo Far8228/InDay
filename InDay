@@ -3315,6 +3315,19 @@ print("12")
 
 
     Players_Extra:Button({
+    Name = "Animation v5",
+    Default = false,
+    Pointer = "AimbotMain_Enabled",
+    Callback = function(state)
+    local Animate = game.Players.LocalPlayer.Character.Animate
+    Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+    Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
+    game.Players.LocalPlayer.Character.Humanoid.Jump = false
+    end})
+
+
+
+    Players_Extra:Button({
     Name = "Headless & Korblox",
     Default = false,
     Pointer = "AimbotMain_Enabled",
@@ -5003,6 +5016,7 @@ flightSpeed = 50
 defaultGravity = services.Workspace.Gravity
 character = services.Players.LocalPlayer.Character or services.Players.LocalPlayer.CharacterAdded:Wait()
 humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+humanoid = character:WaitForChild("Humanoid")
 
 -- Functions
 function GetHumanoid()
@@ -5010,19 +5024,17 @@ function GetHumanoid()
 end
 
 function StartFlying()
-    local humanoid = GetHumanoid()
     humanoid.PlatformStand = true
     humanoid.UseJumpPower = false
     humanoid:ChangeState(Enum.HumanoidStateType.Physics)
-    services.Workspace.Gravity = 0
+    services.Workspace.Gravity = 0 -- Disable gravity
 end
 
 function StopFlying()
-    local humanoid = GetHumanoid()
     humanoid.PlatformStand = false
     humanoid.UseJumpPower = true
     humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
-    services.Workspace.Gravity = defaultGravity
+    services.Workspace.Gravity = defaultGravity -- Re-enable gravity
 end
 
 function ToggleFly(state)
@@ -5048,6 +5060,7 @@ function ControlFlight()
         local right = camera.CFrame.RightVector
         local up = Vector3.new(0, 1, 0)
 
+        -- Movement directions (WASD and Space/Shift)
         if services.UserInputService:IsKeyDown(Enum.KeyCode.W) then
             moveDirection += forward
         end
@@ -5060,18 +5073,27 @@ function ControlFlight()
         if services.UserInputService:IsKeyDown(Enum.KeyCode.D) then
             moveDirection += right
         end
+        
+        -- **Fix for upward movement with Space**
         if services.UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-            moveDirection += up
+            moveDirection += up -- Move up when space is pressed
         end
         if services.UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
-            moveDirection -= up
+            moveDirection -= up -- Move down when shift is pressed
         end
 
+        -- Normalize the movement direction and apply flight speed
         if moveDirection.Magnitude > 0 then
             moveDirection = moveDirection.Unit * flightSpeed
         end
 
-        humanoidRootPart.CFrame += moveDirection
+        -- Apply movement to humanoidRootPart and ensure we move upward when space is pressed
+        humanoidRootPart.Velocity = Vector3.new(moveDirection.X, moveDirection.Y, moveDirection.Z)
+
+        -- If no directional keys are pressed, ensure the player doesn't fall
+        if moveDirection.Magnitude == 0 then
+            humanoidRootPart.Velocity = Vector3.new(0, humanoidRootPart.Velocity.Y, 0)
+        end
     end
 end
 
@@ -5083,6 +5105,7 @@ function SetupFlying()
     services.Players.LocalPlayer.CharacterAdded:Connect(function(newCharacter)
         character = newCharacter
         humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        humanoid = character:WaitForChild("Humanoid")
         if flying then
             StartFlying()
         end
@@ -5117,10 +5140,10 @@ Misc_Movement:Toggle({
 Misc_Movement:Slider({
     Name = "Fly Speed",
     Flag = "MiscMovement_FlyNum",
-    Default = 7,
+    Default = 300,
     Minimum = 1,
-    Maximum = 300,
-    Decimals = 1,
+    Maximum = 2000,
+    Decimals = 10,
     Callback = function(value)
         SetFlightSpeed(value)
     end
