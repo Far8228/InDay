@@ -15,7 +15,7 @@ if not _G.Teleported then
     end
 end
 
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/anticheat/refs/heads/main/bypass"))()
 
 
 game:GetService("StarterGui"):SetCore("SendNotification",{
@@ -1797,7 +1797,118 @@ do -- UI
             local Rage_Main = Rage:Section({Name = Languages:GetTranslation("Main"), Side = "Left"})
             local Rage_Extra = Rage:Section({Name = Languages:GetTranslation("Extra"), Fill = true, Side = "Left"})
             local Rage_Gui = Rage:Section({Name = Languages:GetTranslation("Gui"), Side = "Right"})
+            local Rage_AutoBuy = Rage:Section({Name = Languages:GetTranslation("Auto Buys"), Fill = true, Side = "Right"})
+            
 
+
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Workspace = game:GetService("Workspace")
+
+local REVOLVER_COST = 1421  -- Cost of the revolver
+local teleportLocation = CFrame.new(999999999999999999, 999999999999999999, 999999999999999999) -- Target teleport coordinates
+
+-- Function to announce notifications
+local function announce(title, text, time)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = title,
+        Text = text,
+        Duration = time,
+    })
+end
+
+-- Function to buy revolver and instantly teleport
+local function buyRevolver()
+    Character = Player.Character or Player.CharacterAdded:Wait()
+    local RevolverShop = Workspace.Ignored.Shop["[Revolver] - $1421"]
+
+    if Player.DataFolder.Currency.Value >= REVOLVER_COST then
+        -- Teleport to the revolver shop
+        Character.HumanoidRootPart.CFrame = RevolverShop.Head.CFrame
+
+        -- Simulate clicking the purchase button
+        local clickDetector = RevolverShop:FindFirstChild("ClickDetector")
+        if clickDetector then
+            fireclickdetector(clickDetector) -- Simulate clicking the detector
+        end
+
+        -- Instantly teleport to the specified location (-100, -100, -100)
+        wait(0.1)
+        Character.HumanoidRootPart.CFrame = teleportLocation
+    else
+        announce("Insufficient Funds", "You need more money to buy the revolver!", 3)
+    end
+end
+
+-- Button to trigger revolver purchase
+Rage_AutoBuy:Button({
+    Name = "Buy Revolver",
+    Callback = function()
+        buyRevolver()
+    end
+})
+
+
+
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Workspace = game:GetService("Workspace")
+
+local REVOLVER_COST = 82  -- Cost of the revolver
+local teleportLocation = CFrame.new(999999999999999999, 999999999999999999, 999999999999999999) -- Target teleport coordinates
+
+-- Function to announce notifications
+local function announce(title, text, time)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = title,
+        Text = text,
+        Duration = time,
+    })
+end
+
+-- Function to buy revolver and instantly teleport
+local function buyRevolver()
+    local Character = Player.Character or Player.CharacterAdded:Wait()
+    local RevolverShop = Workspace.Ignored.Shop["12 [Revolver Ammo] - $82"]
+
+    if Player.DataFolder.Currency.Value >= REVOLVER_COST and Character and Character:FindFirstChild("HumanoidRootPart") then
+        -- Teleport to the revolver shop
+        Character.HumanoidRootPart.CFrame = RevolverShop.Head.CFrame
+
+        -- Simulate clicking the purchase button multiple times to ensure it registers
+        local clickDetector = RevolverShop:FindFirstChild("ClickDetector")
+        if clickDetector then
+            for i = 1, 10 do
+                fireclickdetector(clickDetector)
+                task.wait(0.1) -- Small delay between clicks
+            end
+        end
+
+        -- Ensure teleport occurs instantly after purchase
+        task.wait(0.1)
+        if Character and Character:FindFirstChild("HumanoidRootPart") then
+            Character.HumanoidRootPart.CFrame = teleportLocation
+        end
+    else
+        announce("Insufficient Funds", "You need more money to buy the revolver!", 3)
+    end
+end
+
+-- Ensure script runs even after death
+Player.CharacterAdded:Connect(function(newCharacter)
+    Character = newCharacter
+end)
+
+-- Button to trigger revolver purchase
+Rage_AutoBuy:Button({
+    Name = "Buy Revolver ammo",
+    Callback = function()
+        task.spawn(buyRevolver) -- Ensures the function can be called multiple times without issue
+    end
+})
 
 
 
@@ -2816,9 +2927,6 @@ Rage_Main:Slider({
 
 
 
-
-
-
 local Players = game:GetService("Players")
 local Client = Players.LocalPlayer
 local autoResetEnabled = false
@@ -2826,7 +2934,7 @@ local autoResetEnabled = false
 -- Function to monitor player's K.O state
 local function startMonitoring(state)
     task.spawn(function()
-        while state and task.wait(0.1) do
+        while state and task.wait(0) do
             if Client.Character and Client.Character:FindFirstChild("BodyEffects") then
                 local BodyEffects = Client.Character:WaitForChild("BodyEffects")
 
@@ -3191,6 +3299,20 @@ print("12")
     end})
 
 
+    Players_Extra:Button({
+    Name = "Animation v4",
+    Default = false,
+    Pointer = "AimbotMain_Enabled",
+    Callback = function(state)
+    local Animate = game.Players.LocalPlayer.Character.Animate
+    Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=707742142"
+    Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=707855907"
+    Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=707897309"
+    Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=707861613"
+    game.Players.LocalPlayer.Character.Humanoid.Jump = false
+    end})
+
+
 
     Players_Extra:Button({
     Name = "Headless & Korblox",
@@ -3332,6 +3454,61 @@ Players_Main:Slider({
 })
 
 
+
+
+local healthThreshold = 50
+
+function announce(title, text, time)
+    game.StarterGui:SetCore("SendNotification", {Title = title, Text = text, Duration = time})
+end
+
+function buyAndEatPizza()
+    while buyingActive do
+        local Character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+        local health = Character:FindFirstChildOfClass("Humanoid").Health
+        if health <= healthThreshold and game.Players.LocalPlayer.DataFolder.Currency.Value >= 5 then
+            Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Ignored.Shop["[Pizza] - $5"].Head.CFrame
+            for _ = 1, 5 do fireclickdetector(game:GetService("Workspace").Ignored.Shop["[Pizza] - $5"]:FindFirstChild("ClickDetector")) wait(0.1) end
+            
+            Character.HumanoidRootPart.CFrame = CFrame.new(math.random(-99999999999999999, 99999999999999999), 10, math.random(-99999999999999999, 99999999999999999))
+            
+            if game.Players.LocalPlayer.Backpack:FindFirstChild("[Pizza]") then
+                game.Players.LocalPlayer.Backpack.Pizza.Parent = Character
+                wait(0.2) -- Ensure it's equipped before eating
+                for _ = 1, 10 do game:GetService("VirtualUser"):ClickButton1(Vector2.new()) wait(0.1) end
+            end
+        end
+        wait(0.5)
+    end
+end
+
+function toggleAutoPizza(state)
+    buyingActive = state
+    announce("Auto Pizza " .. (state and "Activated" or "Deactivated"), state and "Auto-buying and eating pizza when health is low" or "Stopped auto pizza buying", 5)
+    if state then coroutine.wrap(buyAndEatPizza)() end
+end
+
+Players_Main:Toggle({
+    Name = "Automatic Pizza",
+    Default = false,
+    Pointer = "AutoPizza_Enabled",
+    Callback = function(state) toggleAutoPizza(state) end
+})
+
+
+
+
+Players_Main:Slider({
+    Name = "Automatic pizza",
+    Minimum = 1,
+    Maximum = 100,
+    Default = 30,
+    Decimals = 1,
+    Pointer = "OrbitDistance_Slider",
+    Callback = function(value)
+        healthThreshold = value
+    end
+})
 
 
 
@@ -4083,6 +4260,12 @@ local function startRemovingEffects()
                             child:Destroy()
                         end
                     end
+                    
+                    -- Ensure Reload effect is always false
+                    local reloadEffect = bodyEffects:FindFirstChild("Reload")
+                    if reloadEffect and reloadEffect:IsA("BoolValue") and reloadEffect.Value then
+                        reloadEffect.Value = false
+                    end
                 end
             end
             task.wait(0)
@@ -4108,6 +4291,7 @@ Players_Main:Toggle({
         end
     end
 })
+
 
 
 
@@ -4730,7 +4914,7 @@ end
 
 -- Add the toggle further down
 Misc_Custom:Toggle({
-    Name = "Random Teleport",
+    Name = "Random Teleport Doesn't work",
     Default = false,
     Pointer = "RandomTeleport_Toggle",
     Callback = function(toggleState)
@@ -4743,6 +4927,54 @@ Misc_Custom:Toggle({
         end
     end
 })
+
+
+
+
+local randomTeleportEnabled = false
+local originalPosition = nil  -- Variable to store the original position of the player
+
+-- Random teleport logic
+function teleportLoop()
+    while randomTeleportEnabled do
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            -- Generate random coordinates in the range you mentioned
+            local newX = math.random(-999999999, 999999999)
+            local newY = math.random(-999999999, 999999999)
+            local newZ = math.random(-999999999, 999999999)
+
+            -- Apply the random teleport
+            player.Character.HumanoidRootPart.CFrame = CFrame.new(newX, newY, newZ)
+        end
+        task.wait(0.1)  -- Add a small delay to prevent crashing
+    end
+end
+
+-- Toggle for enabling/disabling random teleport
+Misc_Custom:Toggle({
+    Name = "Anti Reign",
+    Default = false,
+    Pointer = "Random_Teleport_Toggle",
+    Callback = function(state)
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            if state then
+                -- Store the player's current position when teleportation starts
+                originalPosition = player.Character.HumanoidRootPart.Position
+                randomTeleportEnabled = true
+                spawn(teleportLoop) -- Run teleport function in a separate thread
+            else
+                -- Teleport back to original position when turning off
+                if originalPosition then
+                    player.Character.HumanoidRootPart.CFrame = CFrame.new(originalPosition)
+                end
+                randomTeleportEnabled = false
+            end
+        end
+    end
+})
+
 
 
 
@@ -5151,10 +5383,11 @@ end)
                             Desync.Fake.Velocity = Vector3.new(9999999999999, -9999999999999, 9999999999999)
                             Desync.Fake.RotVelocity = Vector3.new(9999999999999, -9999999999999, 9999999999999)
                         elseif VelocityMethod == "Destroy Stand" then
-                        Desync.Fake.CFrame = CFrame.new(-999999999999999999999999999999, -999999999999999999999999999999, 999999999999999999999999999999) * CFrame.Angles(-999999999999999999999999999999, -999999999999999999999999999999, 999999999999999999999999999999)
+                        Desync.Fake.CFrame = CFrame.new(-9999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999) * CFrame.Angles(-9999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999)
                         elseif VelocityMethod == "Furthest It Can Go" then
                            Desync.Fake.Velocity = Vector3.new(-999999999999999999999999999999, -999999999999999999999999999999, -999999999999999999999999999999)
                            Desync.Fake.RotVelocity = Vector3.new(-999999999999999999999999999999, -999999999999999999999999999999, -999999999999999999999999999999)
+                            Desync.Fake.CFrame = CFrame.new(-999999999999999999999999999999, -999999999999999999999999999999, 999999999999999999999999999999) * CFrame.Angles(-999999999999999999999999999999, -999999999999999999999999999999, 999999999999999999999999999999)
                         elseif VelocityMethod == "Reversed" then
                             Desync.Fake.Velocity = -Desync.Real.Velocity
                             Desync.Fake.RotVelocity = -Desync.Real.RotVelocity
@@ -5307,7 +5540,5 @@ end)
     --Library:SaveConfig()
 end
 end
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/anticheat/refs/heads/main/bypass"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/flanchhh/AntiV2/refs/heads/main/Anti%20v2.lua"))();
--- loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/script2-skin/refs/heads/main/script2%20skin"))()
+-- loadstring(game:HttpGet("https://raw.githubusercontent.com/bebepro/pastesense/refs/heads/main/pastesense"))()
+-- loadstring(game:HttpGet("https://raw.githubusercontent.com/flanchhh/AntiV2/refs/heads/main/Anti%20v2.lua"))();
